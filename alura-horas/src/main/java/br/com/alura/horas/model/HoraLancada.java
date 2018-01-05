@@ -81,6 +81,14 @@ public class HoraLancada {
 		this.horaFinal = horaFinal;
 	}
 	
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	
 	public double getDuracao() {
 		try {
 			SimpleDateFormat format = new SimpleDateFormat("HH:mm");

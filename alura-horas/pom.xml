@@ -79,7 +79,6 @@
 
 	<build>
 		<finalName>alura-horas</finalName>
-		<outputDirectory>/home/rafael/Área de Trabalho/vraptor-blank-project/src/main/webapp/WEB-INF/classes</outputDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

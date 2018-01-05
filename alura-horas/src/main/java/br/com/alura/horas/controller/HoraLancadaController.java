@@ -1,10 +1,13 @@
 package br.com.alura.horas.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.validation.Valid;
 
 import br.com.alura.horas.dao.HoraLancadaDao;
 import br.com.alura.horas.model.HoraLancada;
+import br.com.alura.horas.model.RelatorioDeHoras;
 import br.com.alura.horas.security.UsuarioLogado;
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Result;
@@ -38,6 +41,7 @@ public class HoraLancadaController {
 	
 	@IncludeParameters
 	public void adiciona(@Valid HoraLancada horaLancada) {
+		horaLancada.setUsuario(usuarioLogado.getUsuario());
 		validator.onErrorRedirectTo(this).formulario();
 		horaLancadaDao.adiciona(horaLancada);
 		result.redirectTo(this).lista();
@@ -45,5 +49,11 @@ public class HoraLancadaController {
 	
 	public void lista() {
 		result.include("horas",horaLancadaDao.lista());
+	}
+	
+	public void relatorioHoras() {
+		List<HoraLancada> horas = horaLancadaDao.horasDoUsuario(usuarioLogado.getUsuario());
+		RelatorioDeHoras relatorioDeHoras = new RelatorioDeHoras(horas);
+		result.include("relatorio",relatorioDeHoras);
 	}
 }

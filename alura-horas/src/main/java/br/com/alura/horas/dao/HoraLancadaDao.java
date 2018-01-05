@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import br.com.alura.horas.model.HoraLancada;
+import br.com.alura.horas.model.Usuario;
 
 @RequestScoped
 public class HoraLancadaDao {
@@ -33,6 +34,13 @@ public class HoraLancadaDao {
 	public List<HoraLancada> lista() {
 		String jpql = "select h from HoraLancada h";
 		TypedQuery<HoraLancada> query = this.entityManager.createQuery(jpql,HoraLancada.class);
+		return query.getResultList();
+	}
+	
+	public List<HoraLancada> horasDoUsuario(Usuario usuario){
+		String jpql = "select h from HoraLancada h where h.usuario = :usuario order by h.data";
+		TypedQuery<HoraLancada> query = this.entityManager.createQuery(jpql,HoraLancada.class);
+		query.setParameter("usuario", usuario);
 		return query.getResultList();
 	}
 
