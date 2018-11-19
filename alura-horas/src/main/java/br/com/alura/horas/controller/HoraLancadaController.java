@@ -12,6 +12,7 @@ import br.com.alura.horas.security.UsuarioLogado;
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.interceptor.IncludeParameters;
+import br.com.caelum.vraptor.validator.SimpleMessage;
 import br.com.caelum.vraptor.validator.Validator;
 
 @Controller
@@ -42,6 +43,12 @@ public class HoraLancadaController {
 	@IncludeParameters
 	public void adiciona(@Valid HoraLancada horaLancada) {
 		horaLancada.setUsuario(usuarioLogado.getUsuario());
+		if(Integer.parseInt(horaLancada.getHoraInicial().substring(0, 1)) > Integer.parseInt(horaLancada.getHoraFinal().substring(0, 1)) || 
+				Integer.parseInt(horaLancada.getHoraInicial().substring(0, 1)) == Integer.parseInt(horaLancada.getHoraFinal().substring(0, 1)) && 
+				Integer.parseInt(horaLancada.getHoraInicial().substring(3, 4)) > Integer.parseInt(horaLancada.getHoraFinal().substring(3, 4))) {
+			validator.add(new SimpleMessage("horainicial_invalida", "A hora inicial deve ser menor que a final"));
+			validator.onErrorRedirectTo(this).formulario();
+		}
 		validator.onErrorRedirectTo(this).formulario();
 		horaLancadaDao.adiciona(horaLancada);
 		result.redirectTo(this).lista();

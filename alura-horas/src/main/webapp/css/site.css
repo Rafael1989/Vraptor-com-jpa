@@ -2,3 +2,36 @@
 	display: block;
 	color: red;
 }
+
+.menu-principal{
+	background-color: black !important;
+}
+
+.menu-principal li{
+	padding: 20px;
+}
+
+.menu-principal li a{
+	text-decoration: none;
+	color: red;	
+}
+
+.menu-principal li a:hover{
+	color:white;
+}
+
+.frase-principal{
+	text-align: center;
+    width: 146%;
+    margin-top: 150px;
+}
+
+.novo-usuario-link{
+	color: red;
+	text-decoration: none;
+}
+
+.novo-usuario-link:hover{
+	color:black;
+	text-decoration: none;
+}

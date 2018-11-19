@@ -18,7 +18,7 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-public class HoraLancada {
+public class HoraLancada{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

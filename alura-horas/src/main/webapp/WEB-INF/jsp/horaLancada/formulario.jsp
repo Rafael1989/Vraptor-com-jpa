@@ -1,10 +1,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="alura"%>
 <c:import url="/WEB-INF/jsp/header.jsp"/>
 
 <form action="${linkTo[HoraLancadaController].adiciona(null)}" method="post">
+    <alura:validationMessage name="horainicial_invalida"/>
+
 	<label for="data">Data:</label>
-	<input type="text" class="form-control" id="data" name="horaLancada.data" value="${horaLancada.data.time}"/>
+	<fmt:formatDate pattern="dd/MM/yyyy" value="${horaLancada.data.time}" var="dataFormatada"/>
+	<input type="text" class="form-control" id="data" name="horaLancada.data" value="${dataFormatada}"/>
 	<alura:validationMessage name="horaLancada.data"/>
 	
 	<label for="horaInicial">Hora inicial:</label>

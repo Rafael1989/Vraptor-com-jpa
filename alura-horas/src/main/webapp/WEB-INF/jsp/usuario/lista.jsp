@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:import url="/WEB-INF/jsp/header.jsp"/>
-<a href="${linkTo[UsuarioController].formulario()}">Novo usuário</a>
+<a class="novo-usuario-link" href="${linkTo[UsuarioController].formulario()}">Novo usuário</a>
 <table class="table table-hover">
 	<thead>
 		<tr>
