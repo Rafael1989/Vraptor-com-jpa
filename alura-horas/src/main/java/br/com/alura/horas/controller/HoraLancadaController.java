@@ -54,6 +54,11 @@ public class HoraLancadaController {
 		result.redirectTo(this).lista();
 	}
 	
+	public void preparaEdita(HoraLancada horaLancada) {
+		result.include("horaLancada",horaLancada);
+		result.redirectTo(this).formulario();
+	}
+	
 	public void lista() {
 		result.include("horas",horaLancadaDao.lista());
 	}
