@@ -8,6 +8,8 @@
 			<th>Nome</th>
 			<th>E-mail</th>
 			<th>Login</th>
+			<th></th>
+			<th></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -17,6 +19,8 @@
 				<td>${usuario.nome}</td>
 				<td>${usuario.email}</td>
 				<td>${usuario.login}</td>
+				<td><a href="${linkTo[UsuarioController].preparaEdita(usuario.id)}">Editar</a></td>
+				<td><a href="${linkTo[UsuarioController].remove(usuario.id)}">Excluir</a></td>
 			</tr>
 		</c:forEach>
 	</tbody>

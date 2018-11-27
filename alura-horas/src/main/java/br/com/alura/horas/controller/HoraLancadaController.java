@@ -10,6 +10,7 @@ import br.com.alura.horas.model.HoraLancada;
 import br.com.alura.horas.model.RelatorioDeHoras;
 import br.com.alura.horas.security.UsuarioLogado;
 import br.com.caelum.vraptor.Controller;
+import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.interceptor.IncludeParameters;
 import br.com.caelum.vraptor.validator.SimpleMessage;
@@ -54,9 +55,16 @@ public class HoraLancadaController {
 		result.redirectTo(this).lista();
 	}
 	
-	public void preparaEdita(HoraLancada horaLancada) {
-		result.include("horaLancada",horaLancada);
+	@Path("/horaLancada/preparaEdita/{id}")
+	public void preparaEdita(int id) {
+		result.include("horaLancada",horaLancadaDao.getHoraLancadaById(id));
 		result.redirectTo(this).formulario();
+	}
+	
+	@Path("/horaLancada/remove/{id}")
+	public void remove(int id) {
+		horaLancadaDao.removeHoraLancada(id);
+		result.redirectTo(this).lista();
 	}
 	
 	public void lista() {

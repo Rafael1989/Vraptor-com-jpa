@@ -5,7 +5,7 @@
 
 <form action="${linkTo[HoraLancadaController].adiciona(null)}" method="post">
     <alura:validationMessage name="horainicial_invalida"/>
-
+	<input type="hidden" name="horaLancada.id" value="${horaLancada.id}"/>
 	<label for="data">Data:</label>
 	<fmt:formatDate pattern="dd/MM/yyyy" value="${horaLancada.data.time}" var="dataFormatada"/>
 	<input type="text" class="form-control" id="data" name="horaLancada.data" value="${dataFormatada}"/>

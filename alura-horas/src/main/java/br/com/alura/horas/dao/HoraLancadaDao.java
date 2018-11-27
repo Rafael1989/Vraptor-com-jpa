@@ -26,9 +26,14 @@ public class HoraLancadaDao {
 	}
 
 	public void adiciona(HoraLancada horaLancada) {
-		this.entityManager.getTransaction().begin();
-		this.entityManager.persist(horaLancada);
-		this.entityManager.getTransaction().commit();
+		try {
+			this.entityManager.getTransaction().begin();
+			this.entityManager.merge(horaLancada);
+			this.entityManager.getTransaction().commit();
+		} catch (Exception ex) {
+            ex.printStackTrace();
+            entityManager.getTransaction().rollback();
+		}
 	}
 
 	public List<HoraLancada> lista() {
@@ -42,6 +47,25 @@ public class HoraLancadaDao {
 		TypedQuery<HoraLancada> query = this.entityManager.createQuery(jpql,HoraLancada.class);
 		query.setParameter("usuario", usuario);
 		return query.getResultList();
+	}
+	
+	public HoraLancada getHoraLancadaById(int id) {
+		String jpql = "select h from HoraLancada h where h.id = :id";
+		TypedQuery<HoraLancada> query = this.entityManager.createQuery(jpql,HoraLancada.class);
+		query.setParameter("id", id);
+		return query.getSingleResult();
+	}
+	
+	public void removeHoraLancada(int id) {
+		try {
+			this.entityManager.getTransaction().begin();
+			HoraLancada horaLancada = this.entityManager.find(HoraLancada.class, id);
+			this.entityManager.remove(horaLancada);
+			this.entityManager.getTransaction().commit();
+		} catch (Exception ex) {
+            ex.printStackTrace();
+            entityManager.getTransaction().rollback();
+		}
 	}
 
 }

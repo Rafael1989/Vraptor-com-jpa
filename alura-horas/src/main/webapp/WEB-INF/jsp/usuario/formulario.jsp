@@ -2,7 +2,7 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="alura" %>
 <c:import url="/WEB-INF/jsp/header.jsp"/>
 <form action="${linkTo[UsuarioController].adiciona(null)}" method="post">
-	
+	<input type="hidden" id="id" name="usuario.id" value="${usuario.id}"/>
 	<label for="nome">Nome:</label>
 	<input type="text" id="nome" name="usuario.nome" class="form-control" value="${usuario.nome}"/>
 	<alura:validationMessage name="usuario.nome"/>
@@ -16,7 +16,7 @@
 	<alura:validationMessage name="usuario.login"/>
 	
 	<label for="senha">Senha:</label>
-	<input type="password" id="senha" name="usuario.senha" class="form-control"/>
+	<input type="password" id="senha" name="usuario.senha" class="form-control" value="${usuario.senha}"/>
 	<alura:validationMessage name="usuario.senha"/>
 	
 	<input type="submit" value="Cadastrar" class="btn"/>

@@ -6,6 +6,7 @@ import javax.validation.Valid;
 import br.com.alura.horas.dao.UsuarioDao;
 import br.com.alura.horas.model.Usuario;
 import br.com.caelum.vraptor.Controller;
+import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.interceptor.IncludeParameters;
@@ -39,6 +40,18 @@ public class UsuarioController {
 	public void adiciona(@Valid Usuario usuario) {
 		validator.onErrorRedirectTo(this).formulario();
 		usuarioDAO.adiciona(usuario);
+		result.redirectTo(this).lista();
+	}
+	
+	@Path("/usuario/preparaEdita/{id}")
+	public void preparaEdita(int id) {
+		result.include("usuario",usuarioDAO.getUsuarioById(id));
+		result.redirectTo(this).formulario();
+	}
+	
+	@Path("/usuario/remove/{id}")
+	public void remove(int id) {
+		usuarioDAO.removeUsuario(id);
 		result.redirectTo(this).lista();
 	}
 

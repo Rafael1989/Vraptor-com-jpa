@@ -12,6 +12,7 @@
 			<th>Hora Final</th>
 			<th>Duração</th>
 			<th></th>
+			<th></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -23,6 +24,7 @@
 				<td>${hora.horaFinal}</td>
 				<td><fmt:formatNumber type="number" maxFractionDigits="0" value="${hora.duracao}" /></td>
 				<td><a href="${linkTo[HoraLancadaController].preparaEdita(hora.id)}">Editar</a></td>
+				<td><a href="${linkTo[HoraLancadaController].remove(hora.id)}">Excluir</a></td>
 			</tr>
 		</c:forEach>
 	</tbody>
