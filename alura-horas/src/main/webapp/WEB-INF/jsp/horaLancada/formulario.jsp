@@ -18,7 +18,7 @@
 	<label for="horaFinal">Hora final:</label>
 	<input type="text" class="form-control" id="horaFinal" name="horaLancada.horaFinal" value="${horaLancada.horaFinal}"/>
 	<alura:validationMessage name="horaLancada.horaFinal"/>
-	
+	<br/>
 	<input type="submit" value="Cadastrar" class="btn"/>
 </form>
 

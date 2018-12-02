@@ -23,6 +23,7 @@ public class HoraLancadaController {
 	private Validator validator;
 	private HoraLancadaDao horaLancadaDao;
 	private UsuarioLogado usuarioLogado;
+	private double somaTotal;
 
 	@Deprecated
 	HoraLancadaController() {
@@ -68,7 +69,14 @@ public class HoraLancadaController {
 	}
 	
 	public void lista() {
-		result.include("horas",horaLancadaDao.lista());
+		List<HoraLancada> lista = horaLancadaDao.lista();
+		for(HoraLancada horaLancada : lista) {
+			somaTotal += horaLancada.getDuracao();
+		}
+		result.include("horasTotais",(int) somaTotal);
+		result.include("minutosTotais",(int) (somaTotal * 60) % 60);
+		result.include("segundosTotais",(int) (somaTotal * (60*60)) % 60);
+		result.include("horas",lista);
 	}
 	
 	public void relatorioHoras() {

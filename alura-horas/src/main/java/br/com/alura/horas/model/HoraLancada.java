@@ -40,6 +40,8 @@ public class HoraLancada{
 
 	@ManyToOne
 	private Usuario usuario;
+	
+	private double somaTotal;
 
 	public int getId() {
 		return id;
@@ -95,10 +97,23 @@ public class HoraLancada{
 			Date horaInicial = format.parse(this.horaInicial);
 			Date horaFinal = format.parse(this.horaFinal);
 			long millis = horaFinal.getTime() - horaInicial.getTime();
-			return millis / (1000.0*60.0*60.0);
+			double tempo = millis / (1000.0*60.0*60.0);
+			return tempo;
 		}catch(ParseException e) {
 			return 0.0;
 		}
 	}
-
+	
+	public int getHora() {
+		return (int) getDuracao();
+	}
+	
+	public int getMinutos() {
+		return (int) (getDuracao() * 60) % 60;
+	}
+	
+	public int getSegundos() {
+		return (int) (getDuracao() * (60*60)) % 60;
+	}
+	
 }

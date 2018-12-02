@@ -18,7 +18,7 @@
 	<label for="senha">Senha:</label>
 	<input type="password" id="senha" name="usuario.senha" class="form-control" value="${usuario.senha}"/>
 	<alura:validationMessage name="usuario.senha"/>
-	
+	<br/>
 	<input type="submit" value="Cadastrar" class="btn"/>
 	
 </form>
