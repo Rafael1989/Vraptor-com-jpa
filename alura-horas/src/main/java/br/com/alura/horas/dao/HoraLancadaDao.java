@@ -42,6 +42,13 @@ public class HoraLancadaDao {
 		return query.getResultList();
 	}
 	
+	public List<HoraLancada> listaPorMes(int mes){
+		String jpql = "select h from HoraLancada h where MONTH(h.data) = :mes";
+		TypedQuery<HoraLancada> query = this.entityManager.createQuery(jpql,HoraLancada.class);
+		query.setParameter("mes", mes);
+		return query.getResultList();
+	}
+	
 	public List<HoraLancada> horasDoUsuario(Usuario usuario){
 		String jpql = "select h from HoraLancada h where h.usuario = :usuario order by h.data";
 		TypedQuery<HoraLancada> query = this.entityManager.createQuery(jpql,HoraLancada.class);

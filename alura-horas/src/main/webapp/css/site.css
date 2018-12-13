@@ -35,3 +35,10 @@
 	color:black;
 	text-decoration: none;
 }
+
+th.ui-datepicker-week-end,
+td.ui-datepicker-week-end {
+    opacity: 0.35;
+  	cursor: not-allowed;
+  	pointer-events: none; 
+}

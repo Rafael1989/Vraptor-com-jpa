@@ -15,9 +15,11 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
+@DynamicUpdate
 public class HoraLancada{
 
 	@Id
@@ -32,6 +34,14 @@ public class HoraLancada{
 
 	@NotEmpty
 	@Pattern(regexp = "\\d{2}:\\d{2}")
+	private String saidaAlmoco;
+	
+	@NotEmpty
+	@Pattern(regexp = "\\d{2}:\\d{2}")
+	private String voltaAlmoco;
+	
+	@NotEmpty
+	@Pattern(regexp = "\\d{2}:\\d{2}")
 	private String horaInicial;
 
 	@NotEmpty
@@ -41,8 +51,6 @@ public class HoraLancada{
 	@ManyToOne
 	private Usuario usuario;
 	
-	private double somaTotal;
-
 	public int getId() {
 		return id;
 	}
@@ -83,6 +91,22 @@ public class HoraLancada{
 		this.horaFinal = horaFinal;
 	}
 	
+	public String getVoltaAlmoco() {
+		return voltaAlmoco;
+	}
+
+	public void setVoltaAlmoco(String voltaAlmoco) {
+		this.voltaAlmoco = voltaAlmoco;
+	}
+
+	public String getSaidaAlmoco() {
+		return saidaAlmoco;
+	}
+
+	public void setSaidaAlmoco(String saidaAlmoco) {
+		this.saidaAlmoco = saidaAlmoco;
+	}
+
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
@@ -94,14 +118,20 @@ public class HoraLancada{
 	public double getDuracao() {
 		try {
 			SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-			Date horaInicial = format.parse(this.horaInicial);
-			Date horaFinal = format.parse(this.horaFinal);
-			long millis = horaFinal.getTime() - horaInicial.getTime();
-			double tempo = millis / (1000.0*60.0*60.0);
-			return tempo;
+			double tempoPrimeiroTurno = calculaIntervaloTempoTrabalhado(format, this.horaInicial, this.saidaAlmoco);
+			double tempoSegundoTurno = calculaIntervaloTempoTrabalhado(format, this.voltaAlmoco, this.horaFinal);
+			return (tempoPrimeiroTurno+tempoSegundoTurno);
 		}catch(ParseException e) {
 			return 0.0;
 		}
+	}
+
+	private double calculaIntervaloTempoTrabalhado(SimpleDateFormat format, String inicio, String fim) throws ParseException {
+		Date inicioDate = format.parse(inicio);
+		Date fimDate = format.parse(fim);
+		long turno = fimDate.getTime() - inicioDate.getTime();
+		double tempoTurno = turno / (1000.0*60.0*60.0);
+		return tempoTurno;
 	}
 	
 	public int getHora() {

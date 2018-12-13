@@ -17,7 +17,7 @@
 	<option value="11">Novembro</option>
 	<option value="12">Dezembro</option>
 </select>
-<table class="table table-hover">
+<table class="table table-hover" id="horasTableId">
 	<thead>
 		<tr>
 			<th>Nome</th>

@@ -11,10 +11,12 @@ import br.com.alura.horas.model.RelatorioDeHoras;
 import br.com.alura.horas.security.UsuarioLogado;
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Path;
+import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.interceptor.IncludeParameters;
 import br.com.caelum.vraptor.validator.SimpleMessage;
 import br.com.caelum.vraptor.validator.Validator;
+import br.com.caelum.vraptor.view.Results;
 
 @Controller
 public class HoraLancadaController {
@@ -23,7 +25,7 @@ public class HoraLancadaController {
 	private Validator validator;
 	private HoraLancadaDao horaLancadaDao;
 	private UsuarioLogado usuarioLogado;
-	private double somaTotal;
+	private double somaTotal = 0;
 
 	@Deprecated
 	HoraLancadaController() {
@@ -60,6 +62,12 @@ public class HoraLancadaController {
 	public void preparaEdita(int id) {
 		result.include("horaLancada",horaLancadaDao.getHoraLancadaById(id));
 		result.redirectTo(this).formulario();
+	}
+	
+	@Post("/horaLancada/listaPorMes")
+	public void listaPorMes(int mes) {
+		List<HoraLancada> lista = horaLancadaDao.listaPorMes(mes);
+		result.use(Results.json()).withoutRoot().from(lista).include("usuario").serialize();
 	}
 	
 	@Path("/horaLancada/remove/{id}")
