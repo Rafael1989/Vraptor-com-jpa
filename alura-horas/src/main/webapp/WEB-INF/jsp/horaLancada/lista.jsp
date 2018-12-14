@@ -23,6 +23,8 @@
 			<th>Nome</th>
 			<th>Data</th>
 			<th>Hora Inicial</th>
+			<th>Saída para o almoço</th>
+			<th>Volta do almoço</th>
 			<th>Hora Final</th>
 			<th>Duração</th>
 			<th></th>
@@ -35,8 +37,10 @@
 				<td>${hora.usuario.nome}</td>
 				<td><fmt:formatDate pattern="dd/MM/yyyy" value="${hora.data.time}" /></td>
 				<td>${hora.horaInicial}</td>
+				<td>${hora.saidaAlmoco}</td>
+				<td>${hora.voltaAlmoco}</td>
 				<td>${hora.horaFinal}</td>
-				<td>${hora.hora}:${hora.minutos}:${hora.segundos}</td>
+				<td>${hora.hora}:${hora.minutos}</td>
 				<td><a href="${linkTo[HoraLancadaController].preparaEdita(hora.id)}">Editar</a></td>
 				<td><a href="${linkTo[HoraLancadaController].remove(hora.id)}">Excluir</a></td>
 			</tr>
@@ -47,9 +51,11 @@
 			<td></td>
 			<td></td>
 			<td></td>
-			<c:if test="${horasTotais > 0 || minutosTotais > 0 || segundosTotais > 0}">
+			<td></td>
+			<td></td>
+			<c:if test="${horasTotais > 0 || minutosTotais > 0}">
 			<td>Total:</td>
-				<td>${horasTotais}:${minutosTotais}:${segundosTotais}</td>
+				<td>${horasTotais}:${minutosTotais}</td>
 			</c:if>
 			<td></td>
 			<td></td>

@@ -81,9 +81,16 @@ public class HoraLancadaController {
 		for(HoraLancada horaLancada : lista) {
 			somaTotal += horaLancada.getDuracao();
 		}
-		result.include("horasTotais",(int) somaTotal);
-		result.include("minutosTotais",(int) (somaTotal * 60) % 60);
-		result.include("segundosTotais",(int) (somaTotal * (60*60)) % 60);
+		String horasTotais = ""+somaTotal;
+		if(horasTotais.length()<2) {
+			horasTotais = "0"+horasTotais;
+		}
+		result.include("horasTotais",horasTotais);
+		String minutosTotais = ""+(somaTotal * 60) % 60;
+		if(minutosTotais.length()<2) {
+			minutosTotais = "0"+minutosTotais;
+		}
+		result.include("minutosTotais",minutosTotais);
 		result.include("horas",lista);
 	}
 	

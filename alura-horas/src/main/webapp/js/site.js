@@ -59,6 +59,7 @@ $( document ).ready(function() {
 		    return [true, "", "disponivel"];
 		  }
 	});
+	$('#horasTableId').DataTable();
 	$('#horaInicial').timepicker({
 		timeFormat: 'HH:mm',
 	    interval: 1,
@@ -112,6 +113,9 @@ $( document ).ready(function() {
     		type: 'post',
     		datatype: 'json',
     		success: function(data){
+    			var table = $('#horasTableId').DataTable();
+    			table.clear();
+                table.destroy();
     			$("#horasTableId").empty();
     			$("#horasTableId").append(
 						'<thead>'+
@@ -119,6 +123,8 @@ $( document ).ready(function() {
 								'<th>Nome</th>'+
 								'<th>Data</th>'+
 								'<th>Hora Inicial</th>'+
+								'<th>Saída para o almoço</th>'+
+								'<th>Volta do almoço</th>'+
 								'<th>Hora Final</th>'+
 								'<th>Duração</th>'+
 								'<th></th>'+
@@ -128,25 +134,40 @@ $( document ).ready(function() {
 						'<tbody>');
     			var duracaoTotal = 0;
     			$.each(data, function (index, horaLancada) {
-    				console.log(data);
     				var i = data[index].horaInicial.split(':');
+    				var s = data[index].saidaAlmoco.split(':');
+    				var v = data[index].voltaAlmoco.split(':');
     				var f = data[index].horaFinal.split(':');
     				var inicio = parseInt(i[0])* 60+ parseInt(i[1]);
+    				var saida = parseInt(s[0])* 60+ parseInt(s[1]);
+    				var volta = parseInt(v[0])* 60+ parseInt(v[1]);
     				var fim = parseInt(f[0])* 60+ parseInt(f[1]);
-    				var duracao = fim - inicio;
+    				var duracao = (saida - inicio)+(fim - volta);
     				var dataFormatada = new Date(data[index].data);
     				var dia = dataFormatada.getDate();
     				var mes =  dataFormatada.getMonth();
     				mes += 1;  // JavaScript months are 0-11
     				var ano = dataFormatada.getFullYear();
     				duracaoTotal += duracao;
+    				minutosDuracao = ""+duracao%60;
+    				horasDuracao = ""+parseInt(duracao/60);
+    				alert(horasDuracao.length);
+    				alert(minutosDuracao.length);
+    				if(minutosDuracao.length < 2){
+    					minutosDuracao = "0"+minutosDuracao;
+    				}
+    				if(horasDuracao.length < 2){
+    					horasDuracao = "0"+horasDuracao;
+    				}
     				$("#horasTableId").append(
 					'<tr>'+
 						'<td>'+data[index].usuario.nome+'</td>'+
 						'<td>'+dia+'/'+mes+'/'+ano+'</td>'+
 						'<td>'+data[index].horaInicial+'</td>'+
+						'<td>'+data[index].saidaAlmoco+'</td>'+
+						'<td>'+data[index].voltaAlmoco+'</td>'+
 						'<td>'+data[index].horaFinal+'</td>'+
-						'<td>'+parseInt(duracao/60)+":"+duracao%60+'</td>'+
+						'<td>'+horasDuracao+":"+minutosDuracao+'</td>'+
 						'<td><a href="preparaEdita/'+data[index].id+'">Editar</a></td>'+
 						'<td><a href="remove/'+data[index].id+'">Excluir</a></td>'+
 					'</tr>');
@@ -161,10 +182,10 @@ $( document ).ready(function() {
 	    					'<td></td>'+
 	    					'<td></td>'+
 	    			
-	    					'<td>Total:</td>'+
-	        				'<td>'+parseInt(duracaoTotal/60)+":"+duracaoTotal%60+'</td>'+
 	    					'<td></td>'+
-	            			'<td></td>'+
+	        				'<td></td>'+
+	    					'<td>Total:</td>'+
+	            			'<td>'+parseInt(duracaoTotal/60)+":"+duracaoTotal%60+'</td>'+
 	    					'<td></td>'+
 	    					'<td></td>'+
 	    				'</tr>'+
@@ -187,6 +208,7 @@ $( document ).ready(function() {
     		    				'</tr>'+
     		    			'</tfoot>');
     			}
+    			table = $('#horasTableId').DataTable();
     		}
     	});
     });
